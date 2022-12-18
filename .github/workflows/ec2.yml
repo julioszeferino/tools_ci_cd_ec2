@@ -43,6 +43,7 @@ jobs:
         # script que sera executado com os comandos ssh
         # export, permite exportar variaveis de ambiente
         # PORT sera a porta da aplicacao
+        # nohup permite que a app nao pare quando a conexao ssh termine
         script: |
           export HOST=${{ secrets.DB_HOST }}
           export USER=${{ secrets.DBUSER }}
@@ -50,3 +51,5 @@ jobs:
           export DBNAME=${{ secrets.DBNAME }}
           export DBPORT=${{ secrets.DBPORT }}
           export PORT=8000
+          chmod +x main
+          nohup ./main &
