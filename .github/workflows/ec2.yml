@@ -44,7 +44,7 @@ jobs:
         # export, permite exportar variaveis de ambiente
         # PORT sera a porta da aplicacao
         script: |
-          export HOST=${{ secrets.DB_HOST }}
+          export HOST=${{ secrets.DBHOST }}
           export USER=${{ secrets.DBUSER }}
           export PASSWORD=${{ secrets.DBPASSWORD }}
           export DBNAME=${{ secrets.DBNAME }}
