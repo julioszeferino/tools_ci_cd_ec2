@@ -1,55 +1,55 @@
-# name: Entrega Continua
+name: Entrega Continua
 
-# on:
-#   workflow_call:
+on:
+  workflow_call:
 
-# jobs:
+jobs:
 
   
-#   ec2:
-#     runs-on: ubuntu-latest
-#     steps:
+  ec2:
+    runs-on: ubuntu-latest
+    steps:
     
 
-#     # trazendo o artefato (programa ja compilado)
-#     - name: Download a Build Artifact
-#       uses: actions/download-artifact@v3.0.0
-#       with:
-#         # Artifact name
-#         name: programa
+    # trazendo o artefato (programa ja compilado)
+    - name: Download a Build Artifact
+      uses: actions/download-artifact@v3.0.0
+      with:
+        # Artifact name
+        name: programa
 
-#     - uses: actions/checkout@v3
+    - uses: actions/checkout@v3
 
-#     # realizando o deploy utilizando o rsync
-#     # https://github.com/easingthemes/ssh-deploy
-#     - name: Deploy to Staging server
-#       uses: easingthemes/ssh-deploy@main
-#       env:
-#         SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }} # chave ssh do servidor remoto
-#         REMOTE_HOST: ${{ secrets.REMOTE_HOST }} # ip do servidor remoto
-#         REMOTE_USER: ${{ secrets.REMOTE_USER }}
-#         TARGET: /home/${{ secrets.REMOTE_USER }} # diretorio no servidor remoto
-#         # EXCLUDE: "/dist/, /node_modules/" 
-#         EXCLUDE: "postgres-data" # coisas que nao serao enviadas
+    # realizando o deploy utilizando o rsync
+    # https://github.com/easingthemes/ssh-deploy
+    - name: Deploy to Staging server
+      uses: easingthemes/ssh-deploy@main
+      env:
+        SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }} # chave ssh do servidor remoto
+        REMOTE_HOST: ${{ secrets.REMOTE_HOST }} # ip do servidor remoto
+        REMOTE_USER: ${{ secrets.REMOTE_USER }}
+        TARGET: /home/${{ secrets.REMOTE_USER }} # diretorio no servidor remoto
+        # EXCLUDE: "/dist/, /node_modules/" 
+        EXCLUDE: "postgres-data" # coisas que nao serao enviadas
 
-#     # executando comandos SSH no servidor
-#     - name: executing remote ssh commands using password
-#       uses: appleboy/ssh-action@master
-#       with:
-#         host: ${{ secrets.REMOTE_HOST }}
-#         username: ${{ secrets.REMOTE_USER }}
-#         key: ${{ secrets.SSH_PRIVATE_KEY }} 
-#         port: 22
-#         # script que sera executado com os comandos ssh
-#         # export, permite exportar variaveis de ambiente
-#         # PORT sera a porta da aplicacao
-#         # nohup permite que a app nao pare quando a conexao ssh termine
-#         script: |
-#           export HOST=${{ secrets.DBHOST }}
-#           export USER=${{ secrets.DBUSER }}
-#           export PASSWORD=${{ secrets.DBPASSWORD }}
-#           export DBNAME=${{ secrets.DBNAME }}
-#           export DBPORT=${{ secrets.DBPORT }}
-#           export PORT=8000
-#           chmod +x main
-#           nohup ./main &
+    # executando comandos SSH no servidor
+    - name: executing remote ssh commands using password
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.REMOTE_HOST }}
+        username: ${{ secrets.REMOTE_USER }}
+        key: ${{ secrets.SSH_PRIVATE_KEY }} 
+        port: 22
+        # script que sera executado com os comandos ssh
+        # export, permite exportar variaveis de ambiente
+        # PORT sera a porta da aplicacao
+        # nohup permite que a app nao pare quando a conexao ssh termine
+        script: |
+          export HOST=${{ secrets.DBHOST }}
+          export USER=${{ secrets.DBUSER }}
+          export PASSWORD=${{ secrets.DBPASSWORD }}
+          export DBNAME=${{ secrets.DBNAME }}
+          export DBPORT=${{ secrets.DBPORT }}
+          export PORT=8000
+          chmod +x main
+          nohup ./main &
