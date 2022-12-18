@@ -1,4 +1,4 @@
-1. Adicionar este trecho ao arquivo go.yml
+## 1. Adicionar este trecho ao arquivo go.yml
 ```yaml
 deploy_EC2:
     needs: build
@@ -6,7 +6,7 @@ deploy_EC2:
     secrets: inherit
 ```
 
-2. Criar o arquivo ec2.yml
+## 2. Criar o arquivo ec2.yml
 
 > Devemos sempre tomar cuidado ao trazermos um artefato para a nossa rotina, já que se os arquivos do artefato tiverem o mesmo nome de um arquivo da aplicação ele pode substituir o arquivo, e o mesmo também pode ocorrer se trouxermos a aplicação depois do artefato.
 
@@ -14,8 +14,15 @@ deploy_EC2:
 
 > Outro ponto importante é que até o actions/checkout@v2 todos os arquivos eram deletados da pasta de trabalho durante a sua execução e isso foi levantado como uma vantagem, então para garantir, sempre que você precisar executar um código que precise do actions/checkout, dê preferência para executá-lo como a primeira tarefa.
 
-3. Criar os secrets
+## 3. Criar os secrets
 - SSH_PRIVATE_KEY: basta colar no value o codigo da chave que realizamos download quando configuramos a VM
 - REMOTE_HOST: No painel EC2 > Instancias > Copiar o Endereco IPv4 Publico
 - REMOTE_USER: No painel EC2 > Instancias > Seleciona a instancia > Conectar > Aba Conexao de Instancia do EC2 > Nome do usuario
-- 
+
+- DBHOST: No painel do RDS > databases > Seleciona a instancia > Copiar o endpoint, la tambem temos as info das outras var de bancos de dados
+
+> Lembrar de criar os secrets que ja tinhamos
+- PASSWORD_DOCKER_HUB: 
+
+
+## 4. 

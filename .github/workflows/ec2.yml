@@ -20,7 +20,7 @@ jobs:
 
     - uses: actions/checkout@v3
 
-    # realizando o deploy via ssh utilizando o rsync
+    # realizando o deploy utilizando o rsync
     # https://github.com/easingthemes/ssh-deploy
     - name: Deploy to Staging server
       uses: easingthemes/ssh-deploy@main
@@ -32,3 +32,21 @@ jobs:
         # EXCLUDE: "/dist/, /node_modules/" 
         EXCLUDE: "postgres-data" # coisas que nao serao enviadas
 
+    # executando comandos SSH no servidor
+    - name: executing remote ssh commands using password
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.REMOTE_HOST }}
+        username: ${{ secrets.REMOTE_USER }}
+        key: ${{ secrets.SSH_PRIVATE_KEY }} 
+        port: 22
+        # script que sera executado com os comandos ssh
+        # export, permite exportar variaveis de ambiente
+        # PORT sera a porta da aplicacao
+        script: |
+          export HOST=${{ secrets.DB_HOST }}
+          export USER=${{ secrets.DBUSER }}
+          export PASSWORD=${{ secrets.DBPASSWORD }}
+          export DBNAME=${{ secrets.DBNAME }}
+          export DBPORT=${{ secrets.DBPORT }}
+          export PORT=8000
