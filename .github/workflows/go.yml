@@ -62,7 +62,7 @@ jobs:
 
   # job para subir a aplicacao para o EC2
   # vamos subir a aplicacao em si
-  deploy_EC2:
-    needs: build
-    uses: ./.github/workflows/ec2.yml
-    secrets: inherit
+  # deploy_EC2:
+  #   needs: build
+  #   uses: ./.github/workflows/ec2.yml
+  #   secrets: inherit
